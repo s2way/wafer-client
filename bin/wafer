@@ -1,0 +1,35 @@
+#!/usr/bin/env node
+
+var path = require('path');
+var fs   = require('fs');
+var lib  = path.join(path.dirname(fs.realpathSync(__filename)), '../lib');
+var exists = fs.existsSync || path.existsSync;
+
+var program = require('commander');
+
+program
+    .version(JSON.parse(fs.readFileSync(__dirname + '/../package.json', 'utf8')).version)
+    .usage('[options] [command] [params]');
+
+program.on('--help', function(){
+    console.log('  Examples:');
+    console.log('');
+    console.log('    $ wafer test /home/wafer/myapp');
+    console.log('');
+});
+
+program.name = 'wafer';
+
+// init command
+program
+    .command('test')
+    .description('test the waferpie app at <path>')
+    .action(function(pathArg){
+        if (exists(pathArg)) {
+            console.log(pathArg);
+            process.exit(0);
+        }
+        process.exit(1);
+    });
+
+program.parse(process.argv);

@@ -1,0 +1,50 @@
+{
+  "name": "waferpie-client",
+  "version": "0.1.0",
+  "dependencies": {
+    "commander": "^2.6.0",
+    "walk": "^2.3.9"
+  },
+  "bin": {
+    "wafer": "./bin/wafer"
+  },
+  "devDependencies": {
+    "blanket": "^1.1.6",
+    "expect.js": "^0.3.1",
+    "coffee-script": "^1.8.0",
+    "coffeelint": "^1.6.0",
+    "grunt": "^0.4.5",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-exec": "^0.4.6",
+    "grunt-jslint": "^1.1.12",
+    "grunt-mocha-test": "^0.11.0",
+    "jslint": "^0.5.2",
+    "karma": "^0.12.21",
+    "karma-coverage": "^0.2.6",
+    "karma-mocha": "^0.1.7",
+    "load-grunt-tasks": "^0.6.0",
+    "mocha": "1.13.0",
+    "should": "^4.0.4",
+    "travis-cov": "^0.2.5"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "pretest": "coffeelint src test",
+    "test": "mocha test --recursive -R progress --compilers coffee:coffee-script/register",
+    "posttest": "mocha test --recursive -R html-cov --compilers coffee:coffee-script/register -r blanket > report.html"
+  },
+  "config": {
+    "blanket": {
+      "pattern": [
+        "src"
+      ],
+      "data-cover-never": "node_modules"
+    },
+    "travis-cov": {
+      "threshold": 95,
+      "removeKey": "branchFcn"
+    }
+  }
+}
